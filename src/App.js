@@ -9,16 +9,16 @@ import Form from './components/Form';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
 import { LackOfFriendsPhrase } from './components/Filter/StyledFilter';
+import useLocalStorage from 'hooks/useLocalstorage';
 
 export default function App() {
-  const [contacts, setContacts] = useState([
+  const [contacts, setContacts] = useLocalStorage('contacts', [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
   const [filter, setFilter] = useState('');
-
   const HandleFormDatas = data => {
     const normalizedDataName = data.name.toLowerCase();
     const checkExistingContact = contacts.map(contact => {
@@ -45,10 +45,7 @@ export default function App() {
       prevState.filter(contact => contact.id !== contactId)
     );
   };
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-    // setContacts(JSON.parse(localStorage.getItem('contacts')));
-  }, [contacts]);
+
   return (
     <Wrapper>
       <PhonebookHeading>Phonebook</PhonebookHeading>
